@@ -47,11 +47,35 @@ module full_adder(
 endmodule
 /*-------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------------------------------------------------------------*/
-module Hierarchy_adder_32bits(
-    input input_carry,
-    input[31:0] number1, number2,
-    output[31:0] result,
+// Indroduce Paramaterization Concept and generate statement
+module Hierarchy_adder_32bits #(parameter N = 32)(
+    input[N-1:0] number1, number2,
+    output[N-1:0] result,
     output c_flag
 );
+    wire[N-1:0] carry;
+    assign c_flag = carry[N-1];
+    
+    generate
+        genvar i;
+        for(i=0; i<N; i=i+1)
+        begin
+            if(i==0)
+                half_adder HA(
+                    .first_bit(number1[0]),
+                    .second_bit(number2[0]),
+                    .sum(result[0]),
+                    .carry(carry[0])
+                );
+            else
+                full_adder FA(
+                    .first_bit_FA(number1[i]),
+                    .second_bit_FA(number2[i]),
+                    .input_carry(carry[i-1]),
+                    .sum_FA(result[i]),
+                    .output_carry(carry[i])
+                );
+        end
+    endgenerate
 
 endmodule
