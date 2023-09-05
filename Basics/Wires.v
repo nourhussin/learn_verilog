@@ -4,7 +4,7 @@
     - Continuous Assignment
 */
 
-module Wire(
+module Wires(
     input in,
     output out 
     // ! Attention Please ---> NO comma for the last port

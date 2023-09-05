@@ -4,3 +4,5 @@
 - Vectors
 - Hierarchy
 - Procedures
+- Assignments
+- Testbenches
